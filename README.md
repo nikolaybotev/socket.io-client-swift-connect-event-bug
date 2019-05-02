@@ -58,7 +58,6 @@ You should see the following output:
 
 Note that there was a 3-second pause between the first two messages - `Connecting to server...`
 and `Connected to server as ___`.
-```
 
 Now open the Xcode wokspace (`open *.xcworkspace`) and run the Swift Socket.IO client from Xcode.
 You should see the following output:
