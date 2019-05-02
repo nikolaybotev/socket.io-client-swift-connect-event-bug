@@ -80,8 +80,31 @@ perform things like connection authentication based on a session token, which ca
 the query string and accessed via the [socket.handshake](https://socket.io/docs/server-api/#socket-handshake)
 `query` or `headers` properties.
 
-After the middleware is complete, the server sends a `connect` packet to the client. The javascript
-socket.io client waits until it receives the `connect` packet before it triggers the 'connect' event.
+After the middleware is complete, the server sends a `connect` packet to the client. This can be observed
+by running the socket.io server with debug logs enabled:
+
+```
+DEBUG=\* node server.js
+```
+
+Then lookig for the output when a client connects:
+
+```
+10:21:11.171Z  INFO Server: User authenticated. 8ZCmGqAh82nU6uz3AAAA
+  socket.io:socket socket connected - writing packet +0ms
+  socket.io:socket joining room 8ZCmGqAh82nU6uz3AAAA +1ms
+  socket.io:client writing packet {"type":0,"nsp":"/"} +3s
+  socket.io-parser encoding packet {"type":0,"nsp":"/"} +2m
+  socket.io-parser encoded {"type":0,"nsp":"/"} as 0 +0ms
+```
+
+The javascript socket.io client waits until it receives the `connect` packet before it triggers the 'connect' event.
+
+```
+  engine.io-client:socket socket receive: type "message", data "0" +3s
+  socket.io-parser decoded 0 as {"type":0,"nsp":"/"} +0ms
+10:21:11.179Z  INFO Client: Connnected to server as 8ZCmGqAh82nU6uz3AAAA
+```
 
 This allows the server to install its listener for client messages before the client has had a chance
 to respond to its own connect event by sending messages to the server.
@@ -106,7 +129,7 @@ Here is the order of events between the node.js client and seerver:
 
 The swift client does not wait for the `connect` packet from the server, but instead triggers its
 `connect` event as soon as a connection to the server has been established. This happens from
-[SocketManager._engineDidOpen](https://github.com/socketio/socket.io-client-swift/blob/v15.0.0/Source/SocketIO/Manager/SocketManager.swift#L351).
+[SocketManager.\_engineDidOpen](https://github.com/socketio/socket.io-client-swift/blob/v15.0.0/Source/SocketIO/Manager/SocketManager.swift#L351).
 
 The [didConnect](https://github.com/socketio/socket.io-client-swift/blob/v15.0.0/Source/SocketIO/Client/SocketIOClient.swift#L178)
 call sets the `SocketIOClient` status to `.connected` and triggers the `connect`
