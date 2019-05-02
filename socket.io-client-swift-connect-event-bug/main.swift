@@ -14,6 +14,7 @@ socket.connect()
 socket.on(clientEvent: .connect) { _, _ in
     log.info("Connected to server as \(socket.sid)")
     socket.emit("hello", "I am here.")
+    log.info("Said hello!")
 }
 
 socket.on("connect_error") { _, _ in
