@@ -1,8 +1,12 @@
 {
   "name": "socket.io-client-swift-connect-event-bug",
   "version": "1.0.0",
-  "description": "",
+  "description": "Demonstrates a connect event bug in the Swift SocketIO client library.",
   "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nikolaybotevb/socket.io-client-swift-connect-event-bug.git"
+  },
   "dependencies": {
     "bunyan": "^1.8.12",
     "bunyan-format": "^0.2.1",
